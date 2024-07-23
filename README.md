@@ -2,6 +2,65 @@
 pipeline {
     agent any
 
+    stages {
+        stage('Prepare') {
+            steps {
+                // Checkout your repository containing the CSV file
+                git 'https://your-repo-url.git'
+            }
+        }
+        
+        stage('Process CSV') {
+            steps {
+                script {
+                    // Define the input and output file names
+                    def inputFile = 'your_file.csv'
+                    def outputFile = 'your_file_processed.csv'
+                    
+                    // Read the input CSV file
+                    def input = new File(inputFile)
+                    def lines = input.readLines()
+                    
+                    // Split the first line (header) to get the column names
+                    def header = lines[0].split(',')
+                    def eimIndex = header.indexOf('eim')
+                    
+                    // Create a new list to hold the processed lines
+                    def processedLines = []
+                    
+                    // Add the new header with 'eim2'
+                    processedLines << (header + 'eim2').join(',')
+                    
+                    // Process each line
+                    lines.tail().each { line ->
+                        def values = line.split(',')
+                        def eimValue = values[eimIndex].toDouble()
+                        def eim2Value = eimValue * 2
+                        processedLines << (values + eim2Value).join(',')
+                    }
+                    
+                    // Write the processed lines to the output CSV file
+                    new File(outputFile).withWriter { writer ->
+                        processedLines.each { writer.println(it) }
+                    }
+                }
+            }
+        }
+        
+        stage('Archive Results') {
+            steps {
+                // Archive the processed CSV file
+                archiveArtifacts artifacts: 'your_file_processed.csv', allowEmptyArchive: true
+            }
+        }
+    }
+}
+
+
+
+pipeline {
+    agent any
+
     environment {
         CSV_FILE = 'path/to/your/file.csv'
         HTML_FILE = 'path/to/your/file.html'
