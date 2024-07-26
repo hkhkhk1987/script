@@ -1,3 +1,70 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housekeep Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .header {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+        .content {
+            padding: 20px;
+        }
+        .highlight {
+            color: green;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>API Hosting Platform – Housekeep Notification</h1>
+    </div>
+    <div class="content">
+        <table border="1">
+            <tr>
+                <td>
+                    <p>Dear CEAP user,</p>
+                    <p><strong>Action required:</strong></p>
+                    <ol>
+                        <li>Check the obsolete API versions for your team from <strong>attachment</strong>.</li>
+                        <li>Run pipeline: <a href="#">User_Self_Housekeep_Prod_V1</a> to housekeep your obsolete APIs on PROD via self-service, you can refer: <a href="#">self-service Guide</a>.</li>
+                    </ol>
+                    <p class="highlight">Please follow the rule: keep up to 2 major versions and 1 minor version for each major version.</p>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p><strong>Please kindly note:</strong></p>
+                    <p>You can check all your existing API versions on CAP from <a href="#">CAEP API Inventory - GCP Prod</a>.</p>
+                    <p><strong>Contact us:</strong></p>
+                    <p>Should you have any questions, please do not hesitate to reach us via <a href="#">SD Ticket</a>.</p>
+                </td>
+            </tr>
+        </table>
+        <p>Best regards,</p>
+        <p><strong>Platform & Cloud Engineering (PCE)</strong></p>
+        <p>Wholesale Technology – CTO</p>
+        <p>Visit our SRE landing page: <a href="#">Link</a></p>
+    </div>
+</body>
+</html>
+
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
