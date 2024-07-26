@@ -1,0 +1,58 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Hosting Platform – Housekeep Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .header {
+            background-color: #b22222;
+            color: white;
+            padding: 10px;
+        }
+        .content {
+            margin-top: 20px;
+        }
+        .action-required, .note, .contact {
+            margin-top: 20px;
+        }
+        .action-required ol {
+            margin-left: 20px;
+        }
+        .highlight {
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>API Hosting Platform – Housekeep Notification</h1>
+    </div>
+    <div class="content">
+        <p>Dear CEAP user,</p>
+        <p>We observed some of your APIs on CAP-PROD have more than 1 minor version for each major version or more than 2 major versions, and those obsolete API versions consume more platform resource, result in additional maintenance effort and running costs, also may affect platform stability. Therefore, we kindly ask for your help in handling the obsolete API housekeep on PROD ASAP.</p>
+        <div class="action-required">
+            <h3>Action required:</h3>
+            <ol>
+                <li>Check the obsolete API versions for your team from <a href="#">attachment</a>.</li>
+                <li>Run pipeline: <a href="#">User_Self_Housekeep_Prod_V1</a> to housekeep your obsolete APIs on PROD via self-service, you can refer: <a href="#">self-service Guide</a>. <span class="highlight">Please follow the rule: keep up to 2 major versions and 1 minor version for each major version.</span></li>
+                <li>Post check and make sure your API works well after housekeeping.</li>
+            </ol>
+        </div>
+        <div class="note">
+            <h3>Please kindly note:</h3>
+            <p>Following the best practice, please housekeep your obsolete API minor version via self-service after each release, you can check all your existing API versions on CAP from <a href="#">CAEP API Inventory - GCP Prod</a>.</p>
+        </div>
+        <div class="contact">
+            <h3>Contact us:</h3>
+            <p>Should you have any questions, please do not hesitate to reach us via <a href="#">SD Ticket</a>. Thank you for your attention to this request. Appreciate your cooperation and support in this matter.</p>
+        </div>
+    </div>
+</body>
+</html>
+```
