@@ -56,3 +56,75 @@
 </body>
 </html>
 ```
+
+
+
+明白了，这里是按照你描述的方式将内容放入一个表格中的HTML代码示例：
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Hosting Platform - Housekeep Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 20px;
+        }
+        th {
+            background-color: #c00;
+            color: white;
+            text-align: left;
+        }
+        .content {
+            font-size: 14px;
+            color: #333;
+            line-height: 1.5;
+        }
+        .content a {
+            color: #0645ad;
+            text-decoration: none;
+        }
+        .content a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <th colspan="2">API Hosting Platform – Housekeep Notification</th>
+        </tr>
+        <tr>
+            <td colspan="2" class="content">
+                <p>Dear CEAP user,</p>
+                <p>We observed some of your APIs on CAP-PROD have more than 1 minor version for each major version or more than 2 major versions, and those obsolete API versions consume more platform resources, result in additional maintenance effort and running costs, also may affect platform stability. Therefore, we kindly ask for your help in handling the obsolete API housekeep on PROD ASAP.</p>
+                <h2>Action required:</h2>
+                <ol>
+                    <li>Check the obsolete API versions for your team from <a href="#">attachment</a>.</li>
+                    <li>Run pipeline: <a href="#">User_Self_Housekeep_Prod_V1</a> to housekeep your obsolete APIs on PROD via self-service, you can refer: <a href="#">self-service Guide</a>. Please follow the rule: keep up to 2 major versions and 1 minor version for each major version.</li>
+                    <li>Post check and make sure your API works well after housekeeping.</li>
+                </ol>
+                <h2>Please kindly note:</h2>
+                <p>Following the best practice, please housekeep your obsolete API minor version via self-service after each release, you can check all your existing API versions on CAP from <a href="#">CAEP API Inventory - GCP Prod</a>.</p>
+                <h2>Contact us:</h2>
+                <p>Should you have any questions, please do not hesitate to reach us via <a href="#">SD Ticket</a>. Thank you for your attention to this request. Appreciate your cooperation and support in this matter.</p>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
+```
+
+保存上述HTML代码为一个文件（例如`notification.html`），然后在浏览器中打开该文件，你就可以看到转换后的内容了。
