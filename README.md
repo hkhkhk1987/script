@@ -1,3 +1,58 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                // 检出代码
+                checkout scm
+            }
+        }
+        
+        stage('Validate YAML') {
+            steps {
+                script {
+                    def yamlFile = 'config.yaml'
+                    
+                    // 读取 YAML 文件内容
+                    def yamlContent = readFile(yamlFile)
+                    
+                    // 解析 YAML 文件
+                    def yaml = new groovy.yaml.YamlSlurper().parseText(yamlContent)
+
+                    // 检查键是否重复
+                    def keys = []
+                    def duplicates = []
+
+                    def collectKeys
+                    collectKeys = { map, parentKey = '' ->
+                        map.each { k, v ->
+                            def fullKey = parentKey ? "${parentKey}.${k}" : k
+                            if (keys.contains(fullKey)) {
+                                duplicates << fullKey
+                            } else {
+                                keys << fullKey
+                            }
+                            if (v instanceof Map) {
+                                collectKeys(v, fullKey)
+                            }
+                        }
+                    }
+
+                    collectKeys(yaml)
+
+                    if (duplicates) {
+                        error "Duplicate keys found: ${duplicates.join(', ')}"
+                    } else {
+                        echo "YAML validation passed."
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 # script
 pipeline {
     agent any
