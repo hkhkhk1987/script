@@ -1,5 +1,73 @@
 pipeline {
     agent any
+    stages {
+        stage('Validate YAML') {
+            steps {
+                script {
+                    // 读取 YAML 文件内容
+                    def yamlFile = 'path/to/your/file.yaml' // 修改为你的文件路径
+                    def yamlContent = readFile(yamlFile)
+                    
+                    // 调用验证函数
+                    validateYaml(yamlContent)
+                }
+            }
+        }
+    }
+}
+
+def validateYaml(yamlContent) {
+    // 将 YAML 内容解析为 Map
+    def yamlMap = parseYaml(yamlContent)
+    
+    // 用于存储 key 的列表
+    def keyList = []
+
+    if (yamlMap.containsKey('Secrets')) {
+        yamlMap.Secrets.each { key ->
+            // 验证 key 是否重复
+            if (keyList.contains(key)) {
+                error("Duplicate key found: ${key}")
+            } else {
+                keyList.add(key)
+            }
+
+            // 验证 key 是否符合 teamname-servicename 的规范
+            if (!key.matches(/^[a-zA-Z0-9]+-[a-zA-Z0-9]+$/)) {
+                error("Invalid key format: ${key}. Expected format: teamname-servicename")
+            }
+        }
+
+        echo "YAML validation passed."
+    } else {
+        error("No 'Secrets' section found in YAML file.")
+    }
+}
+
+def parseYaml(yamlContent) {
+    def yamlMap = [:]
+    def lines = yamlContent.readLines()
+    def currentKey = null
+
+    lines.each { line ->
+        line = line.trim()
+        if (line.startsWith('Secrets:')) {
+            currentKey = 'Secrets'
+            yamlMap[currentKey] = []
+        } else if (line.startsWith('-')) {
+            if (currentKey != null) {
+                yamlMap[currentKey] << line.substring(1).trim().replaceAll("'", "")
+            }
+        }
+    }
+
+    return yamlMap
+}
+
+
+
+pipeline {
+    agent any
 
     stages {
         stage('Checkout') {
