@@ -1,4 +1,39 @@
 
+pipeline {
+    agent any
+
+    stages {
+        stage('Check IAM Policy') {
+            steps {
+                script {
+                    // Replace 'your-secret-name' with the name of your secret
+                    def secretName = 'your-secret-name'
+
+                    // Run the gcloud command and filter output using jq
+                    def output = sh(script: "gcloud secrets get-iam-policy ${secretName} --format=json | jq -r '.bindings[] | select(.role==\"aaa\") | .members[]'", returnStdout: true).trim()
+
+                    // Split the output by new lines to get an array of members
+                    def members = output.split('\n')
+
+                    // Check if the service account is in the list
+                    def serviceAccount = 'serviceAccount:bbb'
+                    def hasRole = members.contains(serviceAccount)
+
+                    // Print the result
+                    if (hasRole) {
+                        echo "Service account bbb has the role aaa."
+                    } else {
+                        echo "Service account bbb does not have the role aaa."
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
