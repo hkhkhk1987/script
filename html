@@ -1,3 +1,38 @@
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Check Secret Labels') {
+            steps {
+                script {
+                    def secretName = 'key1'
+                    def expectedTeamName = 'abc'
+                    def expectedApiName = 'def'
+                    
+                    // 获取标签
+                    def teamname = sh(
+                        script: "gcloud secrets describe ${secretName} --format='value(labels.teamname)'",
+                        returnStdout: true
+                    ).trim()
+                    
+                    def apiname = sh(
+                        script: "gcloud secrets describe ${secretName} --format='value(labels.apiname)'",
+                        returnStdout: true
+                    ).trim()
+                    
+                    // 检查标签是否符合预期
+                    if (teamname == expectedTeamName && apiname == expectedApiName) {
+                        echo "Labels are correct: teamname=${teamname}, apiname=${apiname}"
+                    } else {
+                        error "Labels are incorrect! Found teamname=${teamname}, apiname=${apiname}"
+                    }
+                }
+            }
+        }
+    }
+}
+
 pipeline {
     agent any
     
